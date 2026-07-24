@@ -1,0 +1,38 @@
+testDB/
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# --- Virtual Environments (If you use them) ---
+.venv/
+.env/
+
+# --- IDE/Editor Settings ---
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# --- OS Specific Files ---
+.DS_Store
+Thumbs.db
+ehthumbs.db
+
+# --- Project Specific (Your Scraper) ---
+# Assuming you want to keep the database and strm files on your local machine
+# but not sync them to GitHub.
+/testDB/
+
+# If you use log files
+*.log
+
+# lazy
+lazy-lock.json
