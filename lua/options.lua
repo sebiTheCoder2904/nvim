@@ -46,3 +46,18 @@ vim.opt.incsearch = true -- search as characters are entered
 vim.opt.hlsearch = false -- do not highlight matches
 vim.opt.ignorecase = true -- ignore case in searches by default
 vim.opt.smartcase = true -- but make it case sensitive if an uppercase is entered
+
+-- Folding
+vim.opt.foldlevel = 99
+vim.api.nvim_create_autocmd({ "FileType" }, {
+    callback = function()
+        local buf = vim.api.nvim_get_current_buf()
+        local ok, parser = pcall(vim.treesitter.get_parser, buf)
+        if ok and parser then
+            vim.opt_local.foldmethod = "expr"
+            vim.opt_local.foldexpr = "v:lua.vim.treesitter.foldexpr()"
+        else
+            vim.opt_local.foldmethod = "indent"
+        end
+    end,
+})
