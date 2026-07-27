@@ -34,6 +34,12 @@ vim.keymap.set("n", "<leader>e", vim.diagnostic.open_float, { desc = "Show diagn
 
 vim.keymap.set("n", "<leader>t", "<cmd>ToggleTerm<CR>", { noremap = true, silent = true, desc = "toggle the terminal" })
 
+vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+
+vim.keymap.set("n", "<leader>fr", function()
+    Snacks.picker.recent()
+end, { desc = "open recent files dialoge" })
+
 -----------------
 -- Visual mode --
 -----------------
@@ -41,9 +47,19 @@ vim.keymap.set("n", "<leader>t", "<cmd>ToggleTerm<CR>", { noremap = true, silent
 -- Hint: start visual mode with the same area as the previous area and the same mode
 vim.keymap.set("v", "<", "<gv", opts)
 vim.keymap.set("v", ">", ">gv", opts)
+-- vim.keymap.set({ "n", "v" }, "<ScrollWheelUp>", "k")
+-- vim.keymap.set({ "n", "v" }, "<ScrollWheelDown>", "j")
 
 -------------------
 -- Terminal Mode --
 -------------------
 
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]], { noremap = true })
+
+-------------------
+--      all      --
+-------------------
+
+-- Disable horizontal scrolling across Normal, Visual, and Insert modes
+vim.keymap.set({ "n", "v", "i" }, "<ScrollWheelLeft>", "<Nop>")
+vim.keymap.set({ "n", "v", "i" }, "<ScrollWheelRight>", "<Nop>")
