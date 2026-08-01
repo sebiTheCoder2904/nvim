@@ -11,6 +11,28 @@ if not (vim.uv or vim.loop).fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
+local oil_ns = vim.api.nvim_create_namespace("oil_line_selector")
+
+local function toggle_oil_line()
+    local bufnr = vim.api.nvim_get_current_buf()
+    local lnum = vim.api.nvim_win_get_cursor(0)[1]
+
+    local marks = vim.api.nvim_buf_get_extmarks(bufnr, oil_ns, { lnum - 1, 0 }, { lnum - 1, -1 }, {})
+    if #marks > 0 then
+        vim.api.nvim_buf_del_extmark(bufnr, oil_ns, marks[1][1])
+    else
+        vim.api.nvim_buf_set_extmark(bufnr, oil_ns, lnum - 1, 0, {
+            line_hl_group = "Visual",
+        })
+    end
+    vim.cmd("normal! j")
+end
+
+local function clear_oil_highlights()
+    local bufnr = vim.api.nvim_get_current_buf()
+    vim.api.nvim_buf_clear_namespace(bufnr, oil_ns, 0, -1)
+end
+
 require("lazy").setup({
 
     "loctvl842/monokai-pro.nvim",
@@ -1341,6 +1363,14 @@ require("lazy").setup({
                 ["gx"] = "actions.open_external",
                 ["g."] = { "actions.toggle_hidden", mode = "n" },
                 ["g\\"] = { "actions.toggle_trash", mode = "n" },
+                -- search with f
+                ["f"] = {
+                    callback = function()
+                        -- Opens search pre-filled to match the start of filenames
+                        vim.api.nvim_feedkeys("/\\<", "n", false)
+                    end,
+                    desc = "Ranger-style find",
+                },
 
                 -- yank filename
                 ["yf"] = {
@@ -1382,6 +1412,15 @@ require("lazy").setup({
                             vim.notify("Could not determine current directory", vim.log.levels.ERROR)
                         end
                     end,
+                },
+
+                ["<Space>"] = {
+                    callback = toggle_oil_line,
+                    desc = "Toggle line selection",
+                },
+                ["<BS>"] = {
+                    callback = clear_oil_highlights,
+                    desc = "Clear all line selections",
                 },
             },
             -- Set to false to disable all of the above keymaps
