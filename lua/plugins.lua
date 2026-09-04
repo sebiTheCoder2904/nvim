@@ -78,6 +78,7 @@ require("lazy").setup({
                 yml = { "prettier" },
                 html = { "prettier" },
                 toml = { "taplo" },
+                nix = { "nixfmt" },
             },
             format_on_save = {
                 timeout_ms = 500,
@@ -349,7 +350,7 @@ require("lazy").setup({
                 render_modes = false,
                 -- Executable used to convert latex formula to rendered unicode.
                 -- If a list is provided the commands run in order until the first success.
-                converter = { "utftex", "latex2text" },
+                converter = { "latex2text" },
                 -- Render inline latex formulas.
                 inline = true,
                 -- Render block latex formulas.
