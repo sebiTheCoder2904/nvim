@@ -78,6 +78,7 @@ require("lazy").setup({
                 yaml = { "prettier" },
                 yml = { "prettier" },
                 html = { "prettier" },
+                toml = { "taplo" },
             },
             format_on_save = {
                 timeout_ms = 500,
@@ -89,6 +90,25 @@ require("lazy").setup({
                 },
             },
         },
+    },
+
+    {
+        "barreiroleo/ltex-extra.nvim",
+        ft = { "markdown", "text", "gitcommit" },
+        config = function()
+            vim.api.nvim_create_autocmd("LspAttach", {
+                callback = function(ev)
+                    local client = vim.lsp.get_client_by_id(ev.data.client_id)
+                    if client and client.name == "ltex" then
+                        require("ltex_extra").setup({
+                            load_langs = { "de-DE", "en-US" },
+                            init_check = true,
+                            path = vim.fn.stdpath("data") .. "/ltex",
+                        })
+                    end
+                end,
+            })
+        end,
     },
 
     -- {
@@ -1565,7 +1585,7 @@ require("lazy").setup({
             processor = "magick_cli", -- or "magick_rock"
             integrations = {
                 markdown = {
-                    enabled = true,
+                    enabled = false,
                     clear_in_insert_mode = false,
                     download_remote_images = true,
                     only_render_image_at_cursor = false,

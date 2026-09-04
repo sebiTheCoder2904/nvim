@@ -40,6 +40,17 @@ vim.keymap.set("n", "<leader>fr", function()
     Snacks.picker.recent()
 end, { desc = "open recent files dialoge" })
 
+vim.keymap.set("n", "<leader>lg", function()
+    vim.lsp.buf_notify(0, "workspace/didChangeConfiguration", {
+        settings = { ltex = { language = "de-DE" } },
+    })
+end, { desc = "ltex: switch to German" })
+
+vim.keymap.set("n", "<leader>le", function()
+    vim.lsp.buf_notify(0, "workspace/didChangeConfiguration", {
+        settings = { ltex = { language = "en-US" } },
+    })
+end, { desc = "ltex: switch to English" })
 -----------------
 -- Visual mode --
 -----------------
