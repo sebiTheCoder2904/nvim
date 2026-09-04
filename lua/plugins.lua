@@ -34,8 +34,6 @@ local function clear_oil_highlights()
 end
 
 require("lazy").setup({
-    lockfile = vim.fn.stdpath("data") -- "/lazy-lock.json"
-
     "loctvl842/monokai-pro.nvim",
 
     { "akinsho/toggleterm.nvim", version = "*", config = true },
